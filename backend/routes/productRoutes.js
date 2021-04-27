@@ -9,6 +9,12 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 router.get('/', asyncHandler(async (req, res) => {
     const products = await Product.find({});
+    /**test res error */
+
+    // res.status(401)
+    // throw new Error('Not Authorization')
+
+    /**test res error */
     res.json(products);
 }));
 
