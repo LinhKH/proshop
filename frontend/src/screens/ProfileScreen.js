@@ -31,7 +31,6 @@ const ProfileScreen = ({ location, history }) => {
             history.push('/login')
         } else {
             if (!user || !user.name ) {
-                console.log(user);
                 // dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
                 // dispatch(listMyOrders())
