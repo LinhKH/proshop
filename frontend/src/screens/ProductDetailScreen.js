@@ -14,7 +14,7 @@ const ProductDetailScreen = ({ match }) => {
 
     const dispatch = useDispatch();
 
-    const productDetail = useSelector(state => state.productDetail);
+    const productDetail = useSelector(state => state.productDetails);
 
     const { product, loading, error } = productDetail;
 
