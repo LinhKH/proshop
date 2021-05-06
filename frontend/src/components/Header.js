@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Form, FormControl, Button, Container, Badge, NavDropdown } from 'react-bootstrap'
 import SearchBox from './SearchBox'
@@ -41,7 +42,8 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <SearchBox />
+
+                        <Route render={({ history }) => <SearchBox history={history} />} />
 
                         <Nav className="ml-auto">
                             <LinkContainer to='/cart'>

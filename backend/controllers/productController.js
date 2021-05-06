@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-    const pageSize = 5
+    const pageSize = 8
     const page = Number(req.query.pageNumber) || 1
 
     const keyword = req.query.keyword
@@ -20,7 +20,7 @@ const getProducts = asyncHandler(async (req, res) => {
     const count = await Product.countDocuments({ ...keyword })
     const products = await Product.find({ ...keyword })
         .limit(pageSize)
-        .skip(pageSize * (page - 1))
+        .skip((page - 1) * pageSize)
 
     res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
@@ -117,7 +117,9 @@ const createProductReview = asyncHandler(async (req, res) => {
 
     if (product) {
         const alreadyReviewed = product.reviews.find(
-            (r) => r.user.toString() === req.user._id.toString()
+            (r) => {
+                r.user.toString() === req.user._id.toString()
+            }
         )
 
         if (alreadyReviewed) {
@@ -137,8 +139,7 @@ const createProductReview = asyncHandler(async (req, res) => {
         product.numReviews = product.reviews.length
 
         product.rating =
-            product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-            product.reviews.length
+            product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
 
         await product.save()
         res.status(201).json({ message: 'Review added' })
@@ -152,7 +153,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 // @route   GET /api/products/top
 // @access  Public
 const getTopProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+    const products = await Product.find({}).sort({ rating: -1 }).limit(5)
 
     res.json(products)
 })
